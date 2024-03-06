@@ -1,11 +1,30 @@
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from "./LogoutButton";
+import LoginButton from "./LoginButton";
+
 const Navbar = () => {
+    const { user, isAuthenticated, isLoading } = useAuth0();
+
     return (
+
         <div className="navbar bg-primary">
             <div className="flex-1">
                 <a className="btn btn-ghost text-xl text-white">PhotoHive</a>
             </div>
             <div className="flex-none gap-2">
                 <div className="dropdown dropdown-end">
+                    {isAuthenticated ?
+                        <LogoutButton
+                            size="md"
+                            color="secondary"
+                            text="3xl"
+                        /> :
+                        <LoginButton
+                            size="md"
+                            color="secondary"
+                            text="3xl"
+                        />
+                    }
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
                             <img alt="Tailwind CSS Navbar component" src="../../public/hivephoto.png" />

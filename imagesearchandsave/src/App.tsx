@@ -1,14 +1,13 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import './App.css'
+import Hero from './components/LoginHero'
+import LoginHero from './components/LoginHero';
 
 function App() {
+  const { isAuthenticated,  } = useAuth0();
 
   return (
-    <div className='w-screen h-screen mx-auto px-8 pt-[6.4rem] bg-secondary text-center'>
-        <h1 className='text-6xl text-neutral mb-24'>Welcome to PhotoHive</h1>
-        <button className='btn btn-outline btn-primary text-4xl'>Login</button> 
-        <span className='text-2xl ml-4'>to spawn your hive</span>
-        <img className='w-1/6 mx-auto mt-4' src='../public/hivephoto.png'/>
-    </div>
+    isAuthenticated ? <Hero/> : <LoginHero/>
   )
 }
 
