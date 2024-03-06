@@ -17,12 +17,12 @@ const Navbar = () => {
                         <LogoutButton
                             size="md"
                             color="secondary"
-                            text="3xl"
+                            text="xl"
                         /> :
                         <LoginButton
                             size="md"
                             color="secondary"
-                            text="3xl"
+                            text="xl"
                         />
                     }
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
