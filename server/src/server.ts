@@ -2,6 +2,7 @@ import { config } from './config/config';
 import express from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
+import userRoutes from './routes/User'
 
 const router = express()
 
@@ -35,10 +36,26 @@ const startServer = () => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-        if(req.method == 'OPTIONS'){
+        if (req.method == 'OPTIONS') {
             res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GEt');
             return res.status(200).json({})
         }
         next()
     })
+
+    router.use('/user', userRoutes)
+
+    /* healthcheck */
+    router.get('/ping', (req, res, next) => {
+        res.status(200).json({ message: 'pong' })
+    })
+
+    /* error handling */
+    router.use((req, res, next) => {
+        const error = new Error('not found')
+        console.log(error)
+        return res.status(404).json({ message: error.message })
+    })
+
+    http.createServer(router).listen(config.server.port, () => console.log(`server is up and running on ${config.server.port}`))
 }
