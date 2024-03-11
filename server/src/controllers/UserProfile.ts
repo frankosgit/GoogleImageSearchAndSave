@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import userProfile from "../models/userProfile";
 
 const createUserProfile = (req: Request, res: Response, next: NextFunction) => {
-    const auth0Id = req.params.auth0Id;
+    const { auth0Id } = req.body
     const User = new userProfile({
         auth0Id,
     });
@@ -15,7 +15,7 @@ const createUserProfile = (req: Request, res: Response, next: NextFunction) => {
 
 
 const readUserProfile = (req: Request, res: Response, next: NextFunction) => {
-    const auth0Id = req.params.auth0Id;
+    const auth0Id  = req.params.auth0Id;
     userProfile.findOne({ auth0Id: auth0Id })
         .then(user => user ? res.status(200).json({ user }) : res.status(404).json({ message: 'not found' }))
         .catch((error) => res.status(500).json({ error }));
@@ -23,11 +23,12 @@ const readUserProfile = (req: Request, res: Response, next: NextFunction) => {
 
 
 const likeImage = (req: Request, res: Response, next: NextFunction) => {
-    const { auth0Id } = req.params;
-    const { imageId, imageURL } = req.body;
+    const { auth0Id } = req.body;
+    const { likedImages } = req.body;
+    console.log(likedImages)
     userProfile.findOneAndUpdate(
         { auth0Id: auth0Id },
-        { $addToSet: { likedImages: { imageId, imageURL } } },
+        { $addToSet: { likedImages: { $each: likedImages } } },
         { new: true }
     )
         .then(user => user ? res.status(200).json({ message: "image liked successfully" }) : res.status(404).json({ message: 'not found' }))
@@ -35,8 +36,7 @@ const likeImage = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const unlikeImage = (req: Request, res: Response, next: NextFunction) => {
-    const { auth0Id } = req.params;
-    const { imageId } = req.body;
+    const { auth0Id, imageId } = req.body;
     userProfile.findOneAndUpdate(
         { auth0Id: auth0Id },
         { $pull: { likedImages: { imageId: imageId } } },
