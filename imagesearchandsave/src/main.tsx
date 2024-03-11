@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
 import { Auth0Provider } from '@auth0/auth0-react'
-import Navbar from './components/Navbar.tsx'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './Router/Router'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Auth0Provider
@@ -14,7 +14,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     }}
     cacheLocation="localstorage"
   >
-    <Navbar />
-    <App />
+    <RouterProvider router={router} />
   </Auth0Provider>
 )
