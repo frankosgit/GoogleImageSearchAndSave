@@ -17,9 +17,10 @@ interface IRecievedUserProfile {
 export const UserProfile = () => {
     const { user, isLoading } = useAuth0();
     const [likedImages, setLikedImages] = useState<LikedImage[]>()
+    const [isFetchingData, setIsFetchingData] = useState(true)
 
 
-    const updateDislike = (dislikedImage: LikedImage) => {
+    const updateDislikeLocal = (dislikedImage: LikedImage) => {
         setLikedImages(likedImages?.filter((image) => image.imageURL !== dislikedImage.imageURL))
     }
 
@@ -31,6 +32,7 @@ export const UserProfile = () => {
                     const res = await axios.get<IRecievedUserProfile>(`http://localhost:9090/user/read/${auth0Id}`)
                     console.log(res.data)
                     setLikedImages(res.data.user.likedImages)
+                    setIsFetchingData(false)
                 } catch (error) {
                     console.log(error)
                 }
@@ -47,17 +49,18 @@ export const UserProfile = () => {
         <>
             <div className='w-screen h-screen mx-auto px-8 pt-[6.4rem] bg-secondary text-center'>
                 <h2 className='text-3xl'>Welcome to your profile {user?.nickname}</h2>
-                <h3 className='text-xl my-3'>Here are your saved photos</h3>
                 <img className='w-1/12 mx-auto mt-4' src='../public/hivephoto.png' />
 
-                {likedImages ?
+
+                {likedImages && likedImages.length > 0 ?
                     <LikedGallery
                         images={likedImages}
-                        updateDislike={updateDislike}
-                    />
-                    :
-                    <h2>Search for images and like them to save them here! </h2>
+                        updateDislikeLocal={updateDislikeLocal}
+                    /> :
+                    <h1 className='text-2xl mt-24'>Get started by liking some photos and we'll save them here for you! </h1>
+
                 }
+
             </div>
         </>
     )

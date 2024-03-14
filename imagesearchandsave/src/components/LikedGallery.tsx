@@ -2,17 +2,17 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import { LikedImage } from '../models/likedImageType';
-import toast, { Toaster } from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 
 interface ILikedGallery {
     images: LikedImage[]
-    updateDislike: (image: LikedImage) => void
+    updateDislikeLocal: (image: LikedImage) => void
 }
 
 
 
-const LikedGallery = ({ images, updateDislike }: ILikedGallery) => {
+const LikedGallery = ({ images, updateDislikeLocal }: ILikedGallery) => {
 
     const { user } = useAuth0();
 
@@ -30,7 +30,9 @@ const LikedGallery = ({ images, updateDislike }: ILikedGallery) => {
                     likedImage: likedImage
                 })
                 console.log("disliked image" + res)
-                updateDislike(image)
+                updateDislikeLocal(image)
+                toast("Unliked image!")
+
             } catch (error) {
                 console.log(error)
             }

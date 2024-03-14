@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { IGoogleSearchResponse, IImage } from '../types/googleRes';
-import Gallery from './SearchGallery';
 import axios from 'axios';
 import { GOOGLE_CUSTOM_SEARCH } from '../constants/constants';
 import { useAuth0 } from '@auth0/auth0-react';
-import DotLoader from "react-spinners/DotLoader"
 import Loading from './Loading';
+import SearchGallery from './SearchGallery';
+import { toast } from 'react-toastify';
 
-const Hero = () => {
+const AuthedHero = () => {
     const [query, setQuery] = useState('')
     const [images, setImages] = useState<IImage[]>([])
     const [userExists, setUserExists] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [likedImagesLocal, setLikedImagesLocal] = useState<IImage[]>()
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value)
@@ -40,6 +41,44 @@ const Hero = () => {
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             fetchData()
+        }
+    }
+
+    const handleLike = async (image: IImage) => {
+        const auth0Id = user?.sub
+        if (userExists && auth0Id) {
+            setIsLoading(true)
+            const likedImage = {
+                imageId: image.link,
+                imageURL: image.link
+            }
+
+            console.log(images)
+
+            const isAlreadyLiked = likedImagesLocal?.some(img => img.link === image.link);
+
+            if (isAlreadyLiked) {
+                toast("You've already liked this image")
+                setIsLoading(false)
+                return
+            }
+
+
+            if (!isAlreadyLiked) {
+                try {
+                    const res = await axios.post("http://localhost:9090/user/like", {
+                        auth0Id: auth0Id,
+                        likedImage: [likedImage]
+                    })
+                    console.log(res)
+                    setLikedImagesLocal(prevLikedImages => [...prevLikedImages || [], image])
+                    setIsLoading(false)
+                    toast("Image added to your favourites!!")
+
+                } catch (error) {
+                    console.log(error)
+                }
+            }
         }
     }
 
@@ -87,7 +126,6 @@ const Hero = () => {
                 <img className='w-1/12 mx-auto mt-4' src='../public/hivephoto.png' />
                 <input onChange={onChange} type="text" placeholder="Type here" onKeyDown={handleKeyDown}
                     className="input input-bordered input-primary w-full max-w-xs my-12" />
-                {/* <span className="loading loading-infinity loading-lg"></span> */}
                 <button
                     className="ml-6 btn btn-m btn-outline btn-primary text-m"
                     onClick={fetchData}
@@ -96,9 +134,10 @@ const Hero = () => {
             </div>
             <div className='flex justify-center'>
                 {isLoading ? <Loading /> :
-                    <Gallery
+                    <SearchGallery
                         images={images}
                         userExists={userExists}
+                        handleLike={handleLike}
                     />
                 }
             </div>
@@ -106,4 +145,4 @@ const Hero = () => {
     )
 }
 
-export default Hero
+export default AuthedHero
