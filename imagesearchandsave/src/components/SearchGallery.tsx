@@ -1,48 +1,16 @@
 import { IImage } from '../types/googleRes'
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import axios from 'axios';
-import { useAuth0 } from '@auth0/auth0-react';
-import { UserProfile } from '../models/userProfile';
-import toast from 'react-hot-toast';
-import { useState } from 'react';
+
 
 
 interface IGallery {
     images: IImage[]
     userExists: boolean
+    handleLike: (image: IImage) => void
 }
 
 
-const Gallery = ({ images, userExists }: IGallery) => {
-    const [isLoading, setIsLoading] = useState(false)
-    const { user } = useAuth0();
-
-
-    const handleLike = async (image: IImage) => {
-        const auth0Id = user?.sub
-        if (userExists && auth0Id) {
-            setIsLoading(true)
-            const likedImage = {
-                imageId: image.link,
-                imageURL: image.link
-            }
-
-            new UserProfile(auth0Id, [likedImage])
-
-            try {
-                const res = await axios.post("http://localhost:9090/user/like", {
-                    auth0Id: auth0Id,
-                    likedImage: [likedImage]
-                })
-                console.log(res)
-                setIsLoading(false)
-                toast.success("success! image liked!")
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    }
-
+const SearchGallery = ({ images, handleLike }: IGallery) => {
 
     return (
         <div className='flex flex-col items-center bg-secondary'>
@@ -61,4 +29,4 @@ const Gallery = ({ images, userExists }: IGallery) => {
     )
 }
 
-export default Gallery
+export default SearchGallery

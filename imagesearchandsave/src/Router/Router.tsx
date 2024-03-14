@@ -1,12 +1,10 @@
 import {
   createBrowserRouter,
 } from "react-router-dom";
-import LoginHero from "../components/LoginHero";
 import { UserProfile } from "../pages/UserProfile";
-import { useAuth0 } from "@auth0/auth0-react";
-import Hero from "../components/Hero";
 import Layout from "../Layout/Layout";
 import AuthenticatedRoute from "../components/AuthenticatedRoute";
+import AuthedHero from "../components/AuthedHero";
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +15,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: (
           <AuthenticatedRoute>
-            <Hero />
+            <AuthedHero />
           </AuthenticatedRoute>
         ),
       },
