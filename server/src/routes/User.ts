@@ -6,7 +6,7 @@ import { Schema } from 'mongoose';
 const router = express.Router()
 router.post('/create', ValidateSchema(Schemas.userProfile.create), controller.createUserProfile);
 router.get('/read/:auth0Id', controller.readUserProfile);
-router.patch('/like/', ValidateSchema(Schemas.userProfile.update), controller.likeImage);
-router.patch('/unlike/', ValidateSchema(Schemas.userProfile.update), controller.unlikeImage);
+router.post('/like/', ValidateSchema(Schemas.userProfile.update), controller.likeImage);
+router.post('/unlike/', ValidateSchema(Schemas.userProfile.unlike), controller.unlikeImage);
 
 export = router;

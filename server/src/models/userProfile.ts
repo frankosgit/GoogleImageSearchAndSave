@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose'
 
 export interface IUserProfile {
     auth0Id: string,
-    likedImages?:
+    likedImage?:
     { imageId: string, imageURL: string }[];
 
 }

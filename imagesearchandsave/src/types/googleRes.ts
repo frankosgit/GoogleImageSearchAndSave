@@ -3,7 +3,5 @@ export interface IGoogleSearchResponse {
   }
   
 export interface IImage {
-    title:string,
     link: string,
-    displayLink: string
 }

@@ -23,12 +23,11 @@ const readUserProfile = (req: Request, res: Response, next: NextFunction) => {
 
 
 const likeImage = (req: Request, res: Response, next: NextFunction) => {
-    const { auth0Id } = req.body;
-    const { likedImages } = req.body;
-    console.log(likedImages)
+    const { auth0Id, likedImage } = req.body;
+    console.log(likedImage)
     userProfile.findOneAndUpdate(
         { auth0Id: auth0Id },
-        { $addToSet: { likedImages: { $each: likedImages } } },
+        { $addToSet: { likedImages: likedImage } },
         { new: true }
     )
         .then(user => user ? res.status(200).json({ message: "image liked successfully" }) : res.status(404).json({ message: 'not found' }))
@@ -36,10 +35,10 @@ const likeImage = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const unlikeImage = (req: Request, res: Response, next: NextFunction) => {
-    const { auth0Id, imageId } = req.body;
+    const { auth0Id, likedImage } = req.body;
     userProfile.findOneAndUpdate(
         { auth0Id: auth0Id },
-        { $pull: { likedImages: { imageId: imageId } } },
+        { $pull: { likedImages: likedImage } },
         { new: true }
     )
         .then(user => user ? res.status(200).json({ message: "image removed successfully" }) : res.status(404).json({ message: 'not found' }))

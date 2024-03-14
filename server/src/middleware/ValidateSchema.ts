@@ -23,10 +23,17 @@ export const Schemas = {
         }),
         update: Joi.object<IUserProfile>({
             auth0Id: Joi.string().required(),
-            likedImages: Joi.array().items(Joi.object({
+            likedImage: Joi.array().items(Joi.object({
                 imageId: Joi.string().required(),
                 imageURL: Joi.string().required()
             })).required()
+        }),
+        unlike: Joi.object<IUserProfile>({
+            auth0Id: Joi.string().required(),
+            likedImage: Joi.object({
+                imageId: Joi.string().required(),
+                imageURL: Joi.string().required()
+            }).required()
         })
     }
 }
