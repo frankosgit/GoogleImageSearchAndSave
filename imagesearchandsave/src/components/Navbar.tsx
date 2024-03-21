@@ -4,7 +4,15 @@ import LoginButton from "./LoginButton";
 import { Button } from "./Button";
 
 const Navbar = () => {
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const { user, isAuthenticated, isLoading, logout, loginWithRedirect } = useAuth0();
+
+    const handleLogout = () => {
+        logout();
+    }
+    const handleLogIn = () => {
+        loginWithRedirect();
+    }
+
 
     return (
 
@@ -51,14 +59,15 @@ const Navbar = () => {
                         </div>
                     </div>
                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                        <li>
-                            <a className="justify-between">
+                        {isAuthenticated && <li>
+                            <a href="/userprofile" className="justify-between">
                                 Profile
                                 <span className="badge">New</span>
                             </a>
                         </li>
-                        <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
+                        }
+                        {isAuthenticated ?
+                            <li onClick={handleLogout}><a>Logout</a></li> : <li onClick={handleLogIn}><a>Login</a></li>}
                     </ul>
                 </div>
             </div>

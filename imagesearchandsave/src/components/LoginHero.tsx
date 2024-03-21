@@ -21,7 +21,7 @@ const LoginHero = () => {
                     text="4xl"
                 />
             }
-            {!isAuthenticated && <span className='text-2xl ml-4'>to spawn your hive</span>}
+            {!isAuthenticated && <span className='text-2xl ml-4'>to get started</span>}
             <img className='w-1/6 mx-auto mt-4' src='../public/hivephoto.png' />
         </div>
     )
