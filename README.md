@@ -22,11 +22,11 @@
 * git clone https://github.com/frankosgit/PhotoHive.git
   
 **Install frontend dependencies:**
-```cd googleimagesearchandsave/frontend```
+```cd photohive/frontend```
 ``` npm install```
 
 **Install backend dependencies:**
-```cd ../backend```
+```cd photohive/backend```
 ```npm install```
 
 **Set up environment variables:**
@@ -38,11 +38,11 @@ Create a .env file in the backend directory and add the following variables:
 
 
 ## Start the backend server:
-```cd googleimagesearchandsave/server```
+```cd photohive/server```
 ```npm start```
   
 ## Start the frontend application:
-```cd googleimagesearchandsave/frontend```
+```cd photohive/frontend```
 ```npm run dev```
 
 The app should now be running on http://localhost:5173.
