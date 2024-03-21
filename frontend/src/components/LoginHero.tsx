@@ -1,10 +1,9 @@
-import React from 'react'
 import LoginButton from './LoginButton'
 import { useAuth0 } from '@auth0/auth0-react';
 import LogoutButton from './LogoutButton';
 
 const LoginHero = () => {
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
 
 
     return (
