@@ -6,6 +6,7 @@ const LoginHero = () => {
     const { user, isAuthenticated } = useAuth0();
 
 
+
     return (
         <div className='w-screen h-screen mx-auto px-8 pt-[6.4rem] bg-secondary text-center'>
             <h1 className='text-6xl text-neutral mb-24'> {isAuthenticated ? `Welcome back ${user?.name}` : "Welcome to PhotoHive"}</h1>

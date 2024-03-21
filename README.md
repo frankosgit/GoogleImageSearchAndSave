@@ -30,12 +30,19 @@
 ```npm install```
 
 **Set up environment variables:**
-Create a .env file in the backend directory and add the following variables:
+Create a .env file in the **backend directory** and add the following variables:
+
 
 * MONGO_USERNAME=your_mongodb_username
 * MONGO_PASSWORD=your_mongodb_password
 * SERVER_PORT=your_serverport
 
+Create a .env.local file in **frontend directory** and add the following variables:
+* VITE_OAUTH_DOMAIN= your_vite_oauth_domain
+* VITE_OAUTH_CLIENT_ID= your_vite_oauth_client_id
+* VITE_OAUTH_SECRET= your_vite_oauth_secret
+* VITE_GOOGLE_KEY= your_vite_oauth_key
+* VITE_GOOGLE_CX= your_vite_oauth_cx
 
 ## Start the backend server:
 ```cd photohive/server```

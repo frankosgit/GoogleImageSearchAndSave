@@ -6,6 +6,7 @@ import { Button } from "./Button";
 const Navbar = () => {
     const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
 
+
     const handleLogout = () => {
         logout();
     }
