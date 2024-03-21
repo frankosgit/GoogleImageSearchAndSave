@@ -4,7 +4,8 @@ import LoginButton from "./LoginButton";
 import { Button } from "./Button";
 
 const Navbar = () => {
-    const { user, isAuthenticated, isLoading, logout, loginWithRedirect } = useAuth0();
+    const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
+
 
     const handleLogout = () => {
         logout();

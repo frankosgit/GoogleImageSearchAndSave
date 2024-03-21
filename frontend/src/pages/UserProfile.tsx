@@ -17,7 +17,7 @@ interface IRecievedUserProfile {
 export const UserProfile = () => {
     const { user, isLoading } = useAuth0();
     const [likedImages, setLikedImages] = useState<LikedImage[]>()
-    const [isFetchingData, setIsFetchingData] = useState(true)
+
 
 
     const updateDislikeLocal = (dislikedImage: LikedImage) => {
@@ -32,7 +32,6 @@ export const UserProfile = () => {
                     const res = await axios.get<IRecievedUserProfile>(`http://localhost:9090/user/read/${auth0Id}`)
                     console.log(res.data)
                     setLikedImages(res.data.user.likedImages)
-                    setIsFetchingData(false)
                 } catch (error) {
                     console.log(error)
                 }
