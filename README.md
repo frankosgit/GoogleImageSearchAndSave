@@ -19,7 +19,7 @@
 **These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.**
 
 **Clone the repository:**
-* git clone https://github.com/frankosgit/GoogleImageSearchAndSave.git
+* git clone https://github.com/frankosgit/PhotoHive.git
   
 **Install frontend dependencies:**
 ```cd googleimagesearchandsave/frontend```
