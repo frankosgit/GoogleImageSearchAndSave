@@ -41,7 +41,7 @@ const LikedGallery = ({ images, updateDislikeLocal }: ILikedGallery) => {
 
 
     return (
-        <div className='flex flex-col items-center bg-secondary'>
+        <div className='flex flex-col items-center bg-secondary h-full'>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {
                     images.map((image) => {

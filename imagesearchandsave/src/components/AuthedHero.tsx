@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 
 const AuthedHero = () => {
     const [query, setQuery] = useState('')
+    const [googleRes, setGoogleRes] = useState<IGoogleSearchResponse>()
     const [images, setImages] = useState<IImage[]>([])
     const [userExists, setUserExists] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -17,21 +18,27 @@ const AuthedHero = () => {
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value)
     }
-    const fetchData = async () => {
+    const fetchData = async (correctedQuery?: string) => {
         try {
             setIsLoading(true)
-            const response = await axios.get<IGoogleSearchResponse>(`${GOOGLE_CUSTOM_SEARCH}${import.meta.env.VITE_GOOGLE_KEY}${import.meta.env.VITE_GOOGLE_CX}&num=9&searchType=image&q=${query}`)
-            let imageUrlArray: IImage[] = []
-            response.data.items.forEach((item) => {
-                imageUrlArray.push(item)
-            })
-            updateImages(imageUrlArray)
-
-
+            const serachQuery = correctedQuery || query
+            const response = await axios.get<IGoogleSearchResponse>(`${GOOGLE_CUSTOM_SEARCH}${import.meta.env.VITE_GOOGLE_KEY}${import.meta.env.VITE_GOOGLE_CX}&num=9&searchType=image&q=${serachQuery}`)
+            response && setGoogleRes(response.data)
         } catch (error) {
             console.error(error)
         }
     }
+
+    useEffect(() => {
+        if (googleRes) {
+            console.log(googleRes.items, "google res")
+            let imageUrlArray: IImage[] = []
+            googleRes.items.forEach((item) => {
+                imageUrlArray.push(item)
+            })
+            updateImages(imageUrlArray)
+        }
+    }, [googleRes])
 
     const updateImages = (imageUrlArray: IImage[]) => (
         setImages(imageUrlArray),
@@ -58,7 +65,7 @@ const AuthedHero = () => {
             const isAlreadyLiked = likedImagesLocal?.some(img => img.link === image.link);
 
             if (isAlreadyLiked) {
-                toast("You've already liked this image")
+                toast.error("You've already liked this image")
                 setIsLoading(false)
                 return
             }
@@ -118,17 +125,39 @@ const AuthedHero = () => {
         checkIfUserExists();
     }, [user]);
 
+        const handleSpellingCorrection = () => {
+            const correctedQuery = googleRes?.spelling?.correctedQuery;
+            if (correctedQuery) {
+                setQuery(correctedQuery);
+                const newGoogleRes = {
+                    ...googleRes,
+                    spelling: { ...googleRes.spelling, correctedQuery: undefined }
+                };
+                    setGoogleRes(newGoogleRes)
+                    fetchData(correctedQuery);
+            } else {
+                fetchData();
+            }
+        };
+
+        const handleClick = () => {
+            fetchData()
+        }
+
     return (
         <div className='w-screen h-screen mx-auto px-8 pt-[6.4rem] bg-secondary text-center'>
             <div>
                 <h2 className='text-3xl'>Search the internet for photos</h2>
                 <h3 className='text-xl my-3'>and add them to your hive</h3>
                 <img className='w-1/12 mx-auto mt-4' src='../public/hivephoto.png' />
-                <input onChange={onChange} type="text" placeholder="Type here" onKeyDown={handleKeyDown}
-                    className="input input-bordered input-primary w-full max-w-xs my-12" />
+                <input onChange={onChange} value={query} type="text" placeholder="Type here" onKeyDown={handleKeyDown}
+                    className="input input-bordered input-primary w-full max-w-xs mt-12" />
+                    { googleRes?.searchInformation.formattedSearchTime &&
+                <p className='mt-6'>Search time: {googleRes?.searchInformation.formattedSearchTime} seconds</p>}
+                {googleRes?.spelling && <p className='mb-12 mt-6'>Did you mean: <span onClick={handleSpellingCorrection} className= "italic text-primary cursor-pointer">{googleRes.spelling?.correctedQuery} ?</span></p> }
                 <button
                     className="ml-6 btn btn-m btn-outline btn-primary text-m"
-                    onClick={fetchData}
+                    onClick={handleClick}
                 > Search
                 </button>
             </div>
