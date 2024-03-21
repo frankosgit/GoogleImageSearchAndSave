@@ -36,7 +36,7 @@ Create a .env file in the **server directory** and add the following variables:
 * MONGO_PASSWORD=your_mongodb_password
 * SERVER_PORT=your_serverport
 
-Create a .env file in **frontend directory** and add the following variables:
+Create a .env.local file in **frontend directory** and add the following variables:
 * VITE_OAUTH_DOMAIN= your_vite_oauth_domain
 * VITE_OAUTH_CLIENT_ID= your_vite_oauth_client_id
 * VITE_OAUTH_SECRET= your_vite_oauth_secret
