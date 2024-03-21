@@ -46,7 +46,7 @@ Create a .env.local file in **frontend directory** and add the following variabl
 
 ## Start the backend server:
 ```cd photohive/server```
-```npm start```
+```nodemon```
   
 ## Start the frontend application:
 ```cd photohive/frontend```
