@@ -30,6 +30,7 @@
 ```npm install```
 
 **Set up environment variables:**
+
 Create a .env file in the **server directory** and add the following variables:
 
 * MONGO_USERNAME=your_mongodb_username
