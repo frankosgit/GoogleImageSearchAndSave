@@ -149,7 +149,7 @@ const AuthedHero = () => {
             <div>
                 <h2 className='text-3xl'>Search the internet for photos</h2>
                 <h3 className='text-xl my-3'>and add them to your hive</h3>
-                <img className='w-1/12 mx-auto mt-4' src='../public/hivephoto.png' />
+                <img className='w-1/12 mx-auto mt-4' src='/hivephoto.png' />
                 <input onChange={onChange} value={query} type="text" placeholder="Type here" onKeyDown={handleKeyDown}
                     className="input input-bordered input-primary w-full max-w-xs mt-12" />
                     { googleRes?.searchInformation.formattedSearchTime &&

@@ -22,7 +22,7 @@ const LoginHero = () => {
                 />
             }
             {!isAuthenticated && <span className='text-2xl ml-4'>to get started</span>}
-            <img className='w-1/6 mx-auto mt-4' src='../public/hivephoto.png' />
+            <img className='w-1/6 mx-auto mt-4' src='/hivephoto.png' />
         </div>
     )
 }

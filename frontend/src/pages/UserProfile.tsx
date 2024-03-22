@@ -48,7 +48,7 @@ export const UserProfile = () => {
         <>
             <div className='w-screen h-screen mx-auto px-8 pt-[6.4rem] bg-secondary text-center'>
                 <h2 className='text-3xl'>Welcome to your profile {user?.nickname}</h2>
-                <img className='w-1/12 mx-auto mt-4' src='../public/hivephoto.png' />
+                <img className='w-1/12 mx-auto mt-4' src='/hivephoto.png' />
 
 
                 {likedImages && likedImages.length > 0 ?

@@ -56,7 +56,7 @@ const Navbar = () => {
                     }
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img alt="Tailwind CSS Navbar component" src="../../public/hivephoto.png" />
+                            <img alt="Tailwind CSS Navbar component" src="/hivephoto.png" />
                         </div>
                     </div>
                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
